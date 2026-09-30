@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "fingerprint": "f8d6b1c0e9dff6b4463274f6dc1ce08e6723024d2e5f90fbff9f3d9b6773248f",
+  "fingerprint": "4cc49c10f318a2fad034accba43976ad7de5d31f2b2a89e0c6d4c568513e8f59",
   "release": true,
   "files": {
     "areas.html": "6b729eab640ad10bcea60362affc2855b8800c120f804cb31f320936fe163781",
@@ -10,14 +10,14 @@
     "assets/screenshots/be7e2e1e8a75501b.png": "61c47aaff557e5701408894b0f83b1525d86e0bb4007664e0bd7b64215efaaf5",
     "assets/style.css": "3b26fc680fcf2de668d33b3d7986be3091c3b1f86adbe91eb3099ebeb994fecf",
     "downloads/app.js": "a12464e3ed832184ed9e21ea33b0dcfe43ecd92614bf6189f9fd34df81041fb0",
-    "downloads/assignment.pdf": "172642a551e0ca854bf9765f4c712c0e193950435f7b004c84147b041e345355",
+    "downloads/assignment.pdf": "f3030a2535652f88e111b7730235b3a9b2d03087ff5ce42ada9016911e281139",
     "downloads/Directory-demo-complete.zip": "6e0d14c0b64b057b70a85360adc2f710c08fe07f144dc084f6290c6f7f3b5268",
     "downloads/Directory-starter.zip": "8bc365ce5c264ed1a017da58d6b21e4b518088ddc76d94be04732638935d7fee",
-    "downloads/guide.pdf": "6676b2d10c2fb5d00f13b999645866ee5640e5554c74bf42becbabd82f828e67",
+    "downloads/guide.pdf": "3238314efac6accb88f118d65e0644f8c3995ca3550a28683f97aac2b165f6f6",
     "downloads/index.html": "22892222afb2c511a51b53068bb3bd452d1a5072c9680e924321bc2f82107d77",
     "downloads/report-template.md": "073884ca3adf306202ca44df298d593c78115336aae2490fde21895e5ca01638",
     "downloads/style.css": "76d188f999586d4fec32d996496f0aa956e115b243283710411d68ef8d285bed",
-    "index.html": "c0ca854a25dc63f6fabad0fda5059f4d34308166a0bb5ea34fba7cba699f6f94",
-    "lessons.html": "7e66452015e82df4fae51be969da1df514b1314188f08d2fea6595bc5eac26e4"
+    "index.html": "0583ef9e616acc4de2dc3dff9027d4fe9307f2393355bdd5f556d8224606deee",
+    "lessons.html": "c2975c2aee9f463d20f3fb4b7a538e539765a63b25b1f1a3102d1da5551e607d"
   }
 }
