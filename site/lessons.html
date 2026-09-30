@@ -1,125 +1,192 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Инструкция и образец</title><link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="assets/style.css"></head><body><a class="skip" href="#main">Перейти к содержанию</a><header class="shell top"><a class="brand" href="index.html"><span class="emblem">УП</span><span><strong>Практика / Методические материалы</strong><small>Электронный справочник: качество данных, поиск и обновление · 30 вариантов</small></span></a><span class="version">Версия 1.0</span></header><div class="shell"><nav><a href="index.html" >Задание</a><a href="lessons.html" aria-current=page>Инструкция и образец</a><a href="areas.html" >Предметные области</a></nav><main id="main"><section class="hero"><p class="eyebrow">Учебный маршрут / 2026-2027</p><h1>Инструкция и образец</h1><p>Электронный справочник: качество данных, поиск и обновление · 30 вариантов</p><span class="badge">Учебный комплект</span></section><div class="downloads"><a class="button" href="downloads/assignment.pdf">Скачать задание практики (PDF)</a><a class="button" href="downloads/guide.pdf">Скачать методичку и образец (PDF)</a><a class="button" href="downloads/report-template.md">Скачать общий шаблон отчёта (Markdown)</a></div><article class="lesson"><h2>Справочная служба учебного центра</h2><p>Отдельный пример: импорт записей, обнаружение повтора и неполной строки, поиск, правка и повторная проверка.</p></article><article class="lesson" id="page-1"><p class="eyebrow"></p><h2>Постановка задачи и договор о данных</h2><div class="blocks"><p class="block"><a class="button" href="downloads/Directory-source.zip">Скачать исходный проект электронного справочника (ZIP)</a><br>Начните с него: распакуйте проект, откройте index.html и проверьте импорт.</p><p class="block"><a class="button" href="downloads/demo.csv">Скачать демонстрационный CSV для проверки импорта</a><br>Откройте до запуска, затем загрузите для проверки качества входных строк.</p><section class="block text"><h3>Для чего создаётся справочник</h3><p>Электронный справочник сокращает время поиска сведений и даёт пользователю источник каждой записи. Проверяемое ожидание: корректные записи доступны для поиска, неполные и повторные не искажают выдачу, исправления можно выгрузить.</p></section><section class="block text"><h3>Материалы для первого действия</h3><p>Скачайте исходный проект Directory-source.zip по прямой ссылке ниже и распакуйте его в отдельную папку. Затем скачайте demo.csv: на нём будете проверять импорт. Не изменяйте исходный CSV до того, как запишете прогноз результата.</p></section><section class="block text"><h3>Контракт CSV</h3><p>Заголовок строго id;name;category;contact;source;updated. Точка с запятой отделяет поля; внутри значения её не используют. ID состоит из цифр, дата имеет вид ГГГГ-ММ-ДД, название, категория и источник обязательны. Повтор ID или названия в одной загрузке отклоняется. Такой договор нужен, чтобы импорт и экспорт понимали один файл.</p></section><section class="block text"><h3>Предпроектное исследование</h3><p>Сформулируйте пользователей, действия, источники, риски дублей и ошибки ввода. Зафиксируйте пример запроса «архив» и ожидаемую запись 102. Это исходная проверка точности поиска.</p></section></div></article><article class="lesson" id="page-2"><p class="eyebrow"></p><h2>Открытие проекта и устройство страницы</h2><div class="blocks"><section class="block text"><h3>Открытие в редакторе</h3><p>В Cursor выберите File → Open Folder и папку распакованного проекта. В панели Explorer откройте index.html. Проверьте, что рядом находятся style.css и app.js. Двойной щелчок по index.html в Проводнике открывает страницу в браузере; до выбора CSV она показывает предложение выбрать файл.</p></section><section class="block text"><h3>Создание страницы</h3><p>Если вы воспроизводите проект с нуля, в Explorer выберите New File, создайте index.html и введите код ниже. Поле file даёт пользователю выбрать CSV, query запускает поиск, tbody rows станет таблицей записей, issues — перечнем замечаний. Подключение app.js стоит после элементов страницы, поэтому обработчики находят их при запуске.</p></section><section class="block code"><h3>Разметка index.html целиком</h3><pre>&lt;!doctype html&gt;
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Инструкция и образец</title><link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="assets/style.css"></head><body><a class="skip" href="#main">Перейти к содержанию</a><header class="shell top"><a class="brand" href="index.html"><span class="emblem">УП</span><span><strong>Практика / Методические материалы</strong><small>Самостоятельный проект электронного справочника · 30 предметных областей</small></span></a><span class="version">Версия 2.0</span></header><div class="shell"><nav><a href="index.html" >Задание</a><a href="lessons.html" aria-current=page>Инструкция и образец</a><a href="areas.html" >Предметные области</a></nav><main id="main"><section class="hero"><p class="eyebrow">Учебный маршрут / 2026-2027</p><h1>Инструкция и образец</h1><p>Самостоятельный проект электронного справочника · 30 предметных областей</p><span class="badge">Учебный комплект</span></section><div class="downloads"><a class="button" href="downloads/assignment.pdf">Скачать задание практики (PDF)</a><a class="button" href="downloads/guide.pdf">Скачать методичку и образец (PDF)</a><a class="button" href="downloads/report-template.md">Скачать общий шаблон отчёта (Markdown)</a></div><article class="lesson"><h2>Справочная служба учебного центра</h2><p>Отдельный полный разбор: сверка источников, реализация справочника, проверка данных, поиск, архив, сохранение и экспорт.</p></article><article class="lesson" id="page-1"><p class="eyebrow"></p><h2>Производственная ситуация и обработка заметок</h2><div class="blocks"><p class="block"><a class="button" href="downloads/Directory-starter.zip">Скачать неполную заготовку электронного справочника (ZIP)</a><br>Начните с неё: дополните интерфейс и функции для своей предметной области.</p><p class="block"><a class="button" href="downloads/Directory-demo-complete.zip">Скачать полный демонстрационный справочник для сверки (ZIP)</a><br>Сверяйте устройство после самостоятельной разработки; это решение другой области.</p><section class="block text"><h3>Задача справочника</h3><p>Справочный материал поступает из нескольких внутренних перечней. Запись можно показать пользователю только после проверки названия, категории, кабинета, контакта, источника и даты. В демонстрации используется вымышленный учебный центр; адреса и контакты условные.</p></section><section class="block text"><h3>Исходные сведения демонстрации</h3><p>Перечень А от 01.09.2026: 101 — Справочная служба, Контакты, К-101, внутр. 201; 102 — Учебный архив, Документы, К-102, внутр. 202; 103 — Медиатека, Ресурсы, К-103, внутр. 203. Дополнение Б от 15.09.2026 уточняет контакт Учебного архива: внутр. 222. Старая заметка от 20.08.2026 предлагает для Справочной службы К-009. Более поздний Перечень А имеет приоритет; по Учебному архиву используйте новое документированное уточнение. В каждой записи укажите источник принятого значения.</p></section><section class="block text"><h3>Решение до написания кода</h3><p>Составьте таблицу: ID, нормализованное название, категория, кабинет, контакт, источник, дата проверки, состояние. Зафиксируйте, почему К-009 отклонён и почему контакт архива изменён. Это отделяет ошибку исходных сведений от ошибки программы.</p></section><section class="block text"><h3>Материалы и порядок</h3><p>Скачайте неполную заготовку Directory-starter.zip и распакуйте в рабочую папку. В распакованном архиве откройте папку v2/starter: там находятся index.html, style.css и app.js. Методичка ниже последовательно достраивает её для демонстрационной области. Полный Directory-demo-complete.zip открывайте для сверки после собственного воспроизведения и проверки; его исходники находятся в v2/demo.</p></section></div></article><article class="lesson" id="page-2"><p class="eyebrow"></p><h2>Создание интерфейса в редакторе</h2><div class="blocks"><section class="block text"><h3>Открытие проекта</h3><p>В Cursor выберите File → Open Folder и папку v2/starter внутри распакованной заготовки. В Explorer откройте index.html. Выберите весь файл Ctrl+A и заменяйте его фрагментами ниже по порядку. После каждого законченного раздела сохраните Ctrl+S. Имена id нужны app.js для поиска элементов; при переименовании меняйте оба файла.</p></section><section class="block text"><h3>Документ и заголовок</h3><p>Начните с кодировки UTF-8, заголовка вкладки и подключения style.css. Это позволяет браузеру правильно показать русские подписи и применить стили.</p></section><section class="block code"><h3>Основа документа</h3><pre>&lt;!doctype html&gt;
 &lt;html lang=&quot;ru&quot;&gt;
 &lt;head&gt;
   &lt;meta charset=&quot;utf-8&quot;&gt;
   &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
-  &lt;title&gt;Электронный справочник&lt;/title&gt;
+  &lt;title&gt;Справочник учебного центра — демонстрация&lt;/title&gt;
   &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
+&lt;/head&gt;</pre></section><section class="block text"><h3>Видимая часть страницы</h3><p>Добавьте основной контейнер, название и пояснение для пользователя. Пока форма и таблица не добавлены, на странице будет только заголовок.</p></section><section class="block code"><h3>Заголовок и основной контейнер</h3><pre>&lt;body&gt;
   &lt;main&gt;
-    &lt;h1&gt;Электронный справочник&lt;/h1&gt;
-    &lt;p&gt;Откройте CSV с полями id;name;category;contact;source;updated. Данные остаются в этом браузере.&lt;/p&gt;
-    &lt;label&gt;Файл CSV &lt;input id=&quot;file&quot; type=&quot;file&quot; accept=&quot;.csv,text/csv&quot;&gt;&lt;/label&gt;
-    &lt;p id=&quot;status&quot; role=&quot;status&quot;&gt;Выберите исходный файл.&lt;/p&gt;
-    &lt;label&gt;Поиск по названию, категории и контакту &lt;input id=&quot;query&quot; type=&quot;search&quot;&gt;&lt;/label&gt;
-    &lt;button id=&quot;export&quot; type=&quot;button&quot;&gt;Скачать исправленный CSV&lt;/button&gt;
-    &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Название&lt;/th&gt;&lt;th&gt;Категория&lt;/th&gt;&lt;th&gt;Контакт&lt;/th&gt;&lt;th&gt;Источник&lt;/th&gt;&lt;th&gt;Обновлено&lt;/th&gt;&lt;th&gt;Действие&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;rows&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;
-    &lt;h2&gt;Замечания к данным&lt;/h2&gt;
-    &lt;ul id=&quot;issues&quot;&gt;&lt;/ul&gt;
-  &lt;/main&gt;
-  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+    &lt;h1&gt;Справочник учебного центра&lt;/h1&gt;
+    &lt;p&gt;Проверенные записи сохраняются в этом браузере. Источник и дата проверки видны для каждой записи.&lt;/p&gt;</pre></section><section class="block text"><h3>Форма записи</h3><p>Добавьте форму после заголовка. Поля соответствуют модели записи; `required` помогает не отправить пустое поле, но бизнес-проверки будут в app.js. В демонстрации дополнительное поле — кабинет.</p></section><section class="block code"><h3>Поля и сообщение об ошибке</h3><pre>    &lt;form id=&quot;entry-form&quot;&gt;
+      &lt;h2 id=&quot;form-title&quot;&gt;Новая запись&lt;/h2&gt;
+      &lt;div class=&quot;fields&quot;&gt;
+        &lt;label&gt;ID &lt;input id=&quot;entry-id&quot; required inputmode=&quot;numeric&quot; pattern=&quot;[0-9]+&quot;&gt;&lt;/label&gt;
+        &lt;label&gt;Название &lt;input id=&quot;entry-name&quot; required maxlength=&quot;80&quot;&gt;&lt;/label&gt;
+        &lt;label&gt;Категория &lt;select id=&quot;entry-category&quot;&gt;&lt;option&gt;Контакты&lt;/option&gt;&lt;option&gt;Документы&lt;/option&gt;&lt;option&gt;Ресурсы&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+        &lt;label&gt;Кабинет &lt;input id=&quot;entry-detail&quot; required placeholder=&quot;К-101&quot;&gt;&lt;/label&gt;
+        &lt;label&gt;Контакт &lt;input id=&quot;entry-contact&quot; required&gt;&lt;/label&gt;
+        &lt;label&gt;Источник &lt;input id=&quot;entry-source&quot; required&gt;&lt;/label&gt;
+        &lt;label&gt;Проверено &lt;input id=&quot;entry-checked&quot; required type=&quot;date&quot;&gt;&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;p id=&quot;form-error&quot; class=&quot;error&quot; role=&quot;alert&quot;&gt;&lt;/p&gt;
+      &lt;button type=&quot;submit&quot;&gt;Сохранить запись&lt;/button&gt;
+      &lt;button id=&quot;cancel&quot; type=&quot;button&quot; hidden&gt;Отменить правку&lt;/button&gt;
+    &lt;/form&gt;</pre></section><section class="block text"><h3>Управление и таблица</h3><p>Добавьте поиск, два фильтра, сортировку, кнопку выгрузки и таблицу. `tbody` пуст: строки создаёт код. Кнопки действий появятся в последнем столбце при отрисовке.</p></section><section class="block code"><h3>Поиск, фильтры и таблица</h3><pre>    &lt;section aria-label=&quot;Поиск и выгрузка&quot;&gt;
+      &lt;h2&gt;Поиск и управление&lt;/h2&gt;
+      &lt;div class=&quot;controls&quot;&gt;
+        &lt;label&gt;Поиск &lt;input id=&quot;query&quot; type=&quot;search&quot; placeholder=&quot;Название, категория, кабинет, контакт&quot;&gt;&lt;/label&gt;
+        &lt;label&gt;Состояние &lt;select id=&quot;status-filter&quot;&gt;&lt;option value=&quot;active&quot;&gt;Действующие&lt;/option&gt;&lt;option value=&quot;archived&quot;&gt;Архив&lt;/option&gt;&lt;option value=&quot;all&quot;&gt;Все&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+        &lt;label&gt;Категория &lt;select id=&quot;category-filter&quot;&gt;&lt;option value=&quot;all&quot;&gt;Все категории&lt;/option&gt;&lt;option&gt;Контакты&lt;/option&gt;&lt;option&gt;Документы&lt;/option&gt;&lt;option&gt;Ресурсы&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+        &lt;label&gt;Порядок &lt;select id=&quot;sort&quot;&gt;&lt;option value=&quot;name&quot;&gt;По названию&lt;/option&gt;&lt;option value=&quot;checked&quot;&gt;По дате проверки&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;button id=&quot;export&quot; type=&quot;button&quot;&gt;Скачать CSV&lt;/button&gt;
+      &lt;p id=&quot;summary&quot; role=&quot;status&quot;&gt;&lt;/p&gt;
+      &lt;div class=&quot;table-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Название&lt;/th&gt;&lt;th&gt;Категория&lt;/th&gt;&lt;th&gt;Кабинет&lt;/th&gt;&lt;th&gt;Контакт&lt;/th&gt;&lt;th&gt;Источник&lt;/th&gt;&lt;th&gt;Проверено&lt;/th&gt;&lt;th&gt;Состояние&lt;/th&gt;&lt;th&gt;Действия&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;rows&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;</pre></section><section class="block text"><h3>Подключение логики</h3><p>Скрипт расположен после интерфейса; поэтому querySelector получает уже созданные элементы. Обновите страницу в браузере: видны поля и пустая таблица.</p></section><section class="block code"><h3>Подключение app.js</h3><pre>  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre></section><section class="block text"><h3>Проверка страницы</h3><p>Сохраните Ctrl+S, откройте index.html в браузере. Пока данных нет, таблица пуста, а строка состояния предлагает выбрать файл. Если виден только текст кода, проверьте расширение .html.</p></section><section class="block text"><h3>Оформление</h3><p>Создайте style.css через New File и внесите код ниже. Он делает таблицу читаемой, выделяет заголовки и позволяет горизонтальную прокрутку на узком экране. После Ctrl+S обновите страницу Ctrl+R.</p></section><section class="block code"><h3>Стили style.css</h3><pre>body{font-family:Arial,sans-serif;margin:0;background:#f4f7fa;color:#142333}main{max-width:1100px;margin:auto;padding:24px}h1{margin-top:0}label{display:block;margin:16px 0}input{padding:8px;font:inherit}input[type=search]{display:block;width:100%;max-width:500px}button{padding:8px 12px;cursor:pointer}table{width:100%;border-collapse:collapse;background:white;margin-top:18px}th,td{padding:9px;border:1px solid #b8c4ce;text-align:left;vertical-align:top}th{background:#dce9f3}#status{font-weight:bold}#issues{line-height:1.6}tr:focus-within{outline:2px solid #185b91}@media(max-width:700px){table{display:block;overflow-x:auto}}</pre></section></div></article><article class="lesson" id="page-3"><p class="eyebrow"></p><h2>Импорт и контроль качества</h2><div class="blocks"><p class="block"><a class="button" href="downloads/demo.csv">Скачать демонстрационный CSV для проверки импорта</a><br>Откройте до запуска, затем загрузите для проверки качества входных строк.</p><section class="block text"><h3>Подготовка сценария</h3><p>Откройте demo.csv в Cursor. До запуска отметьте: строки 101, 102 и 104 корректны; повтор названия 103 и неполная строка 105 дадут замечания. Загрузка должна оставить три записи. Такой прогноз помогает отличить проверку данных от случайного успеха.</p></section><section class="block text"><h3>Начало app.js</h3><p>Создайте app.js в той же папке. Сначала объявите список полей и получите элементы по id. Пустые массивы records и issues будут хранить текущее состояние в памяти браузера.</p></section><section class="block code"><h3>Поля и состояние</h3><pre>const columns = [&quot;id&quot;, &quot;name&quot;, &quot;category&quot;, &quot;contact&quot;, &quot;source&quot;, &quot;updated&quot;];
-const fileInput = document.querySelector(&quot;#file&quot;);
-const queryInput = document.querySelector(&quot;#query&quot;);
-const body = document.querySelector(&quot;#rows&quot;);
-const issuesList = document.querySelector(&quot;#issues&quot;);
-const statusLine = document.querySelector(&quot;#status&quot;);
-let records = [];
-let issues = [];
-</pre></section><section class="block text"><h3>Разбор строк и заголовка</h3><p>Вставьте функцию parseCsv после переменных. Она убирает маркер BOM и символы CR, проверяет заголовок до чтения строк. Если заголовок неверен, ошибка касается файла целиком: старые данные сохраняются.</p></section><section class="block code"><h3>Проверка формата файла</h3><pre>function parseCsv(text) {
-  const lines = text.replace(/^\uFEFF/, &quot;&quot;).replace(/\r/g, &quot;&quot;).split(&quot;\n&quot;).filter(Boolean);
-  if (!lines.length || lines[0].trim() !== columns.join(&quot;;&quot;)) {
-    throw new Error(&quot;Первая строка должна быть: &quot; + columns.join(&quot;;&quot;));
+&lt;/html&gt;</pre></section><section class="block text"><h3>Оформление</h3><p>В Explorer откройте style.css и замените содержимое следующими фрагментами. Сетка перестраивается по ширине окна; у таблицы есть горизонтальная прокрутка.</p></section><section class="block code"><h3>Страница и карточки</h3><pre>* { box-sizing: border-box; }
+body { margin: 0; background: #f4f7fa; color: #152633; font: 16px/1.5 Arial, sans-serif; }
+main { max-width: 1300px; margin: auto; padding: 28px; }
+h1 { margin: 0 0 12px; }
+form, section { background: #fff; border: 1px solid #c8d3db; border-radius: 10px; padding: 20px; margin: 20px 0; }
+h2 { margin-top: 0; }</pre></section><section class="block code"><h3>Поля и кнопки</h3><pre>.fields, .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+label { display: block; font-weight: 600; }
+input, select { display: block; width: 100%; padding: 8px; margin-top: 4px; font: inherit; border: 1px solid #8da3b3; border-radius: 4px; }
+button { padding: 8px 12px; margin: 8px 8px 0 0; font: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #176fa4; outline-offset: 2px; }</pre></section><section class="block code"><h3>Ошибки и прокрутка</h3><pre>.error { color: #a31919; font-weight: 600; min-height: 1.5em; }
+.table-wrap { overflow-x: auto; }</pre></section><section class="block code"><h3>Таблица и архив</h3><pre>table { width: 100%; border-collapse: collapse; min-width: 980px; }
+th, td { border: 1px solid #becbd5; padding: 8px; text-align: left; vertical-align: top; }
+th { background: #dceaf4; }
+tr.archived { background: #f1f1f1; color: #52606b; }
+#summary { font-weight: 600; }</pre></section><section class="block code"><h3>Узкий экран</h3><pre>@media (max-width: 600px) { main { padding: 12px; } form, section { padding: 14px; } }</pre></section><section class="block text"><h3>Проверка готового интерфейса</h3><p>Сохраните style.css. Двойным щелчком откройте index.html из Проводника и обновите страницу Ctrl+R. Проверьте форму и столбцы. Если стили отсутствуют, убедитесь, что style.css лежит рядом с index.html.</p></section></div></article><article class="lesson" id="page-3"><p class="eyebrow"></p><h2>Модель записи, сохранение и проверка</h2><div class="blocks"><section class="block text"><h3>Начало app.js</h3><p>Откройте app.js из Explorer и замените комментарий. Список columns задаёт одновременно порядок полей для таблицы и CSV. Массив records хранит записи; editingId показывает, создаётся или меняется запись.</p></section><section class="block code"><h3>Константы и состояние</h3><pre>const STORAGE_KEY = &quot;directory-demo-v2&quot;;
+const CATEGORIES = [&quot;Контакты&quot;, &quot;Документы&quot;, &quot;Ресурсы&quot;];
+const columns = [&quot;id&quot;, &quot;name&quot;, &quot;category&quot;, &quot;detail&quot;, &quot;contact&quot;, &quot;source&quot;, &quot;checked&quot;, &quot;status&quot;];
+const form = document.querySelector(&quot;#entry-form&quot;);
+const rowsElement = document.querySelector(&quot;#rows&quot;);
+const errorElement = document.querySelector(&quot;#form-error&quot;);
+let records = loadRecords();
+let editingId = null;
+</pre></section><section class="block text"><h3>Хранение в браузере</h3><p>localStorage сохраняет текст между открытиями этой страницы в том же браузере. loadRecords разбирает JSON; при повреждённом содержимом возвращает пустой список. saveRecords вызывается после каждого изменения. Проверьте в DevTools → Application → Local Storage ключ directory-demo-v2 после первой сохранённой записи.</p></section><section class="block code"><h3>Чтение и сохранение</h3><pre>function loadRecords() {
+  try {
+    const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || &quot;[]&quot;);
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
   }
-  const result = [];
-  const warnings = [];
-  const ids = new Set();
-  const names = new Set();
-  for (let index = 1; index &lt; lines.length; index++) {</pre></section><section class="block text"><h3>Проверка отдельных записей</h3><p>Продолжите ту же функцию. cells содержит поля одной строки; индекс в файле превращается в номер строки для понятного предупреждения. Ошибочная строка пропускается, но цикл продолжает работу. Множества ids и names позволяют заметить повторы до добавления записи.</p></section><section class="block code"><h3>Проверка строк и дублей</h3><pre>    const cells = lines[index].split(&quot;;&quot;).map(value =&gt; value.trim());
-    const line = index + 1;
-    if (cells.length !== columns.length) {
-      warnings.push(`Строка ${line}: ожидалось шесть полей`);
-      continue;
-    }
-    const item = Object.fromEntries(columns.map((key, position) =&gt; [key, cells[position]]));
-    if (!/^\d+$/.test(item.id) || !item.name || !item.category || !item.source || !/^\d{4}-\d{2}-\d{2}$/.test(item.updated)) {
-      warnings.push(`Строка ${line}: неверный ID, обязательное поле или дата`);
-      continue;
-    }
-    const normalized = item.name.toLocaleLowerCase(&quot;ru&quot;).replace(/\s+/g, &quot; &quot;);
-    if (ids.has(item.id) || names.has(normalized)) {
-      warnings.push(`Строка ${line}: повтор ID или названия`);
-      continue;
-    }
-    ids.add(item.id);
-    names.add(normalized);
-    result.push(item);
-  }
-  return { result, warnings };
 }
-</pre></section><section class="block text"><h3>Проверка функции разбора</h3><p>Сохраните app.js и обновите страницу. В браузере откройте DevTools клавишей F12 → Console и введите parseCsv(&quot;id;name;category;contact;source;updated\n1;Архив;Документы;оператор;каталог;2026-09-01&quot;). Ожидается один элемент result и пустой warnings. Выбор файла через интерфейс проверяется после добавления обработчика change ниже.</p></section><figure class="block screenshot"><h3>Реальный результат загрузки</h3><img src="assets/screenshots/80ef113ffd587034.png" alt="Окно справочника с тремя записями и двумя замечаниями"><figcaption>Chromium: три принятые записи и два замечания по demo.csv; версия исходников 1.0.</figcaption></figure></div></article><article class="lesson" id="page-4"><p class="eyebrow"></p><h2>Показ, поиск и изменение</h2><div class="blocks"><section class="block text"><h3>Вывод без HTML-вставки</h3><p>Функция render строит ячейки через textContent: содержимое CSV показывается как текст и не выполняется как HTML. Поиск сравнивает название, категорию и контакт без учёта регистра. После загрузки число записей и замечаний видно в строке состояния.</p></section><section class="block code"><h3>Отрисовка таблицы и замечаний</h3><pre>function render() {
-  const term = queryInput.value.trim().toLocaleLowerCase(&quot;ru&quot;);
-  body.replaceChildren();
-  for (const item of records.filter(row =&gt; [row.name, row.category, row.contact].some(value =&gt; value.toLocaleLowerCase(&quot;ru&quot;).includes(term)))) {
-    const tr = document.createElement(&quot;tr&quot;);
-    for (const key of columns) {
-      const td = document.createElement(&quot;td&quot;);
-      td.textContent = item[key];
-      tr.append(td);
-    }
-    const action = document.createElement(&quot;td&quot;);
-    const button = document.createElement(&quot;button&quot;);
-    button.textContent = &quot;Изменить&quot;;
-    button.addEventListener(&quot;click&quot;, () =&gt; edit(item));
-    action.append(button);
-    tr.append(action);
-    body.append(tr);
-  }
-  issuesList.replaceChildren(...issues.map(message =&gt; {
-    const li = document.createElement(&quot;li&quot;);
-    li.textContent = message;
-    return li;
-  }));
-  statusLine.textContent = `Записей: ${records.length}; показано: ${body.children.length}; замечаний: ${issues.length}.`;
+
+function saveRecords() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 }
-</pre></section><section class="block text"><h3>Изменение записи</h3><p>Кнопка «Изменить» открывает три поля ввода. Обязательные значения и точка с запятой проверяются до записи в массив; повтор названия также запрещён. Обновлённая дата фиксирует факт правки. После сохранения таблица перестраивается.</p></section><section class="block code"><h3>Правка записи</h3><pre>function edit(item) {
-  const name = prompt(&quot;Название&quot;, item.name);
-  if (name === null) return;
-  const category = prompt(&quot;Категория&quot;, item.category);
-  if (category === null) return;
-  const contact = prompt(&quot;Контакт&quot;, item.contact);
-  if (contact === null) return;
-  if (!name.trim() || !category.trim() || [name, category, contact].some(value =&gt; value.includes(&quot;;&quot;))) {
-    alert(&quot;Название и категория обязательны; точка с запятой запрещена.&quot;);
-    return;
+</pre></section><section class="block text"><h3>Сбор значений формы</h3><p>Функция field обрезает края и объединяет повторные пробелы. collect собирает один объект по именам полей. status при создании всегда active; при правке старое состояние сохраняется ниже.</p></section><section class="block code"><h3>Сбор записи</h3><pre>function field(id) {
+  return document.querySelector(&quot;#entry-&quot; + id).value.trim().replace(/\s+/g, &quot; &quot;);
+}
+
+function collect() {
+  return {
+    id: field(&quot;id&quot;), name: field(&quot;name&quot;), category: field(&quot;category&quot;),
+    detail: field(&quot;detail&quot;).toUpperCase(), contact: field(&quot;contact&quot;),
+    source: field(&quot;source&quot;), checked: field(&quot;checked&quot;), status: &quot;active&quot;
+  };
+}
+</pre></section><section class="block text"><h3>Проверка до изменения массива</h3><p>validDate отвергает несуществующую календарную дату. validate проверяет формат ID и кабинета, обязательные поля, категорию, запрет разделителя CSV и повторы ID/названия. Сообщение возвращается без сохранения ошибочной записи. Кабинет К-101 допустим, К101 и К-1 — нет.</p></section><section class="block code"><h3>Дата и правила качества</h3><pre>function validDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(value + &quot;T00:00:00Z&quot;);
+  return !Number.isNaN(date.valueOf()) &amp;&amp; date.toISOString().slice(0, 10) === value;
+}
+
+function validate(item) {
+  if (!/^\d+$/.test(item.id)) return &quot;ID должен состоять из цифр.&quot;;
+  if (!item.name || !item.contact || !item.source) return &quot;Название, контакт и источник обязательны.&quot;;
+  if (!CATEGORIES.includes(item.category)) return &quot;Выберите категорию из списка.&quot;;
+  if (!/^К-\d{3}$/.test(item.detail)) return &quot;Кабинет укажите в формате К-101.&quot;;
+  if (!validDate(item.checked)) return &quot;Укажите существующую дату проверки.&quot;;
+  if (columns.some(key =&gt; /[;\r\n]/.test(item[key]))) return &quot;В полях нельзя использовать точку с запятой и перенос строки.&quot;;
+  const normalized = item.name.toLocaleLowerCase(&quot;ru&quot;);
+  if (records.some(row =&gt; row.id === item.id &amp;&amp; row.id !== editingId)) return &quot;Этот ID уже есть.&quot;;
+  if (records.some(row =&gt; row.name.toLocaleLowerCase(&quot;ru&quot;) === normalized &amp;&amp; row.id !== editingId)) return &quot;Такое название уже есть.&quot;;
+  return &quot;&quot;;
+}
+</pre></section><section class="block text"><h3>Промежуточная проверка правил</h3><p>Сохраните app.js и откройте страницу. В DevTools → Console введите validDate(&quot;2026-02-30&quot;) и validDate(&quot;2026-02-28&quot;): ожидаются false и true. Затем введите validate({id:&quot;1&quot;,name:&quot;Проверка&quot;,category:&quot;Контакты&quot;,detail:&quot;К101&quot;,contact:&quot;внутр. 1&quot;,source:&quot;Перечень А&quot;,checked:&quot;2026-09-01&quot;,status:&quot;active&quot;}); ожидается сообщение о формате кабинета. Пока форма ещё не подключена, это проверяет законченную функцию отдельно.</p></section></div></article><article class="lesson" id="page-4"><p class="eyebrow"></p><h2>Создание, правка и архивирование</h2><div class="blocks"><section class="block text"><h3>Сохранение через форму</h3><p>clearForm возвращает форму в режим новой записи. Обработчик submit отменяет стандартную отправку страницы, проверяет объект, добавляет его или заменяет старый по ID, сохраняет массив и обновляет таблицу. Если проверка не прошла, запись не меняется.</p></section><section class="block code"><h3>Форма и запись в хранилище</h3><pre>function clearForm() {
+  form.reset();
+  editingId = null;
+  document.querySelector(&quot;#entry-id&quot;).disabled = false;
+  document.querySelector(&quot;#form-title&quot;).textContent = &quot;Новая запись&quot;;
+  document.querySelector(&quot;#cancel&quot;).hidden = true;
+  errorElement.textContent = &quot;&quot;;
+}
+
+form.addEventListener(&quot;submit&quot;, event =&gt; {
+  event.preventDefault();
+  const item = collect();
+  const message = validate(item);
+  if (message) { errorElement.textContent = message; return; }
+  if (editingId === null) records.push(item);
+  else {
+    const position = records.findIndex(row =&gt; row.id === editingId);
+    item.status = records[position].status;
+    records[position] = item;
   }
-  if (records.some(row =&gt; row !== item &amp;&amp; row.name.toLocaleLowerCase(&quot;ru&quot;) === name.trim().toLocaleLowerCase(&quot;ru&quot;))) {
-    alert(&quot;Название уже есть в справочнике.&quot;);
-    return;
-  }
-  Object.assign(item, { name: name.trim(), category: category.trim(), contact: contact.trim(), updated: new Date().toISOString().slice(0, 10) });
+  saveRecords();
+  clearForm();
+  render();
+});
+
+document.querySelector(&quot;#cancel&quot;).addEventListener(&quot;click&quot;, clearForm);
+</pre></section><section class="block text"><h3>Правка и состояние</h3><p>beginEdit переносит значения выбранной строки в форму и блокирует изменение ID. changeStatus переключает запись между действующей и архивной, не удаляя источник. Архивирование обратимо: найдите строку в фильтре «Архив» и восстановите.</p></section><section class="block code"><h3>Правка и архив</h3><pre>function beginEdit(id) {
+  const item = records.find(row =&gt; row.id === id);
+  if (!item) return;
+  editingId = id;
+  for (const key of columns.slice(0, 7)) document.querySelector(&quot;#entry-&quot; + key).value = item[key];
+  document.querySelector(&quot;#entry-id&quot;).disabled = true;
+  document.querySelector(&quot;#form-title&quot;).textContent = &quot;Правка записи &quot; + id;
+  document.querySelector(&quot;#cancel&quot;).hidden = false;
+  errorElement.textContent = &quot;&quot;;
+  form.scrollIntoView({ behavior: &quot;smooth&quot; });
+}
+
+function changeStatus(id) {
+  const item = records.find(row =&gt; row.id === id);
+  if (!item) return;
+  item.status = item.status === &quot;active&quot; ? &quot;archived&quot; : &quot;active&quot;;
+  saveRecords();
   render();
 }
-</pre></section><section class="block text"><h3>Проверка правки после подключения событий</h3><p>После добавления обработчика выбора файла в следующем разделе найдите «архив», затем измените контакт записи 102 и проверьте новую дату. Попробуйте дать ей название уже существующей записи: программа должна отказать, исходное значение останется. Отмена любого окна ввода также не должна менять запись.</p></section><figure class="block screenshot"><h3>Реальный результат поиска</h3><img src="assets/screenshots/2a12a655d28ec4d1.png" alt="Окно справочника с результатом поиска архив"><figcaption>Chromium: запрос «архив» оставил в выдаче запись 102; версия исходников 1.0.</figcaption></figure></div></article><article class="lesson" id="page-5"><p class="eyebrow"></p><h2>Подключение событий и экспорт</h2><div class="blocks"><section class="block text"><h3>Загрузка через поле file</h3><p>Добавьте обработчик change. Он читает выбранный файл средствами браузера и только после успешного разбора заменяет records и issues. Ошибка заголовка выводится отдельно; пользователь может выбрать исправленный CSV.</p></section><section class="block code"><h3>События загрузки и поиска</h3><pre>fileInput.addEventListener(&quot;change&quot;, async () =&gt; {
-  const file = fileInput.files[0];
-  if (!file) return;
-  try {
-    const parsed = parseCsv(await file.text());
-    records = parsed.result;
-    issues = parsed.warnings;
-    render();
-  } catch (error) {
-    statusLine.textContent = `Ошибка файла: ${error.message}`;
+</pre></section><section class="block text"><h3>Причина запрета удаления</h3><p>Справочник хранит прослеживаемость сведений. Для устаревшей записи используйте архивирование; это позволяет объяснить, что было опубликовано раньше, и вернуть запись после уточнения.</p></section></div></article><article class="lesson" id="page-5"><p class="eyebrow"></p><h2>Поиск, сортировка и вывод</h2><div class="blocks"><section class="block text"><h3>Отбор без изменения исходного массива</h3><p>visibleRecords применяет фильтры состояния и категории, затем поиск по четырём полям. Сортировка работает на новом массиве после filter; исходный порядок records не портится. Пустой запрос подходит всем строкам выбранных фильтров.</p></section><section class="block code"><h3>Условия отбора</h3><pre>function visibleRecords() {
+  const query = document.querySelector(&quot;#query&quot;).value.trim().toLocaleLowerCase(&quot;ru&quot;);
+  const status = document.querySelector(&quot;#status-filter&quot;).value;
+  const category = document.querySelector(&quot;#category-filter&quot;).value;
+  const order = document.querySelector(&quot;#sort&quot;).value;
+  return records.filter(item =&gt;
+    (status === &quot;all&quot; || item.status === status) &amp;&amp;
+    (category === &quot;all&quot; || item.category === category) &amp;&amp;
+    [item.name, item.category, item.detail, item.contact].some(value =&gt; value.toLocaleLowerCase(&quot;ru&quot;).includes(query))
+  ).sort((a, b) =&gt; order === &quot;checked&quot; ? b.checked.localeCompare(a.checked) || a.name.localeCompare(b.name, &quot;ru&quot;) : a.name.localeCompare(b.name, &quot;ru&quot;));
+}
+</pre></section><section class="block text"><h3>Безопасное отображение</h3><p>render создаёт элементы DOM и помещает значения через textContent. Поэтому текст записи не интерпретируется как HTML. Для каждой строки добавляются кнопки правки и смены состояния; строка состояния показывает число всех и видимых записей.</p></section><section class="block code"><h3>Таблица и кнопки</h3><pre>function render() {
+  const shown = visibleRecords();
+  rowsElement.replaceChildren();
+  for (const item of shown) {
+    const row = document.createElement(&quot;tr&quot;);
+    if (item.status === &quot;archived&quot;) row.className = &quot;archived&quot;;
+    for (const key of columns) {
+      const cell = document.createElement(&quot;td&quot;);
+      cell.textContent = key === &quot;status&quot; ? (item.status === &quot;active&quot; ? &quot;Действует&quot; : &quot;Архив&quot;) : item[key];
+      row.append(cell);
+    }
+    const actions = document.createElement(&quot;td&quot;);
+    const edit = document.createElement(&quot;button&quot;);
+    edit.type = &quot;button&quot;; edit.textContent = &quot;Править&quot;;
+    edit.addEventListener(&quot;click&quot;, () =&gt; beginEdit(item.id));
+    const toggle = document.createElement(&quot;button&quot;);
+    toggle.type = &quot;button&quot;; toggle.textContent = item.status === &quot;active&quot; ? &quot;В архив&quot; : &quot;Восстановить&quot;;
+    toggle.addEventListener(&quot;click&quot;, () =&gt; changeStatus(item.id));
+    actions.append(edit, toggle);
+    row.append(actions);
+    rowsElement.append(row);
   }
-});
-queryInput.addEventListener(&quot;input&quot;, render);</pre></section><section class="block text"><h3>Проверка загрузки через интерфейс</h3><p>Сохраните app.js, обновите страницу и выберите demo.csv. Ожидаются три записи и два замечания. Если таблица остаётся пустой, откройте DevTools клавишей F12 → Console и проверьте имя app.js и номер строки ошибки. Затем выполните поиск и правку, описанные выше.</p></section><section class="block text"><h3>Выгрузка результата</h3><p>Создайте CSV из текущего массива, добавьте BOM для открытия кириллицы в табличных редакторах и вызовите скачивание. Адрес Blob освобождается после начала загрузки. Имя directory-clean.csv отличает результат от исходника.</p></section><section class="block code"><h3>Экспорт CSV</h3><pre>document.querySelector(&quot;#export&quot;).addEventListener(&quot;click&quot;, () =&gt; {
-  const text = [columns.join(&quot;;&quot;), ...records.map(item =&gt; columns.map(key =&gt; item[key]).join(&quot;;&quot;))].join(&quot;\n&quot;) + &quot;\n&quot;;
-  const url = URL.createObjectURL(new Blob([&quot;\uFEFF&quot;, text], { type: &quot;text/csv;charset=utf-8&quot; }));
+  document.querySelector(&quot;#summary&quot;).textContent = `Всего: ${records.length}; показано: ${shown.length}.`;
+}
+</pre></section><section class="block text"><h3>Реакция на управление</h3><p>Добавьте слушатели ввода для поиска и выпадающих списков. Изменение любого условия сразу перестраивает таблицу.</p></section><section class="block code"><h3>Обновление при фильтрации</h3><pre>for (const id of [&quot;query&quot;, &quot;status-filter&quot;, &quot;category-filter&quot;, &quot;sort&quot;]) {
+  document.querySelector(&quot;#&quot; + id).addEventListener(&quot;input&quot;, render);
+}
+</pre></section></div></article><article class="lesson" id="page-6"><p class="eyebrow"></p><h2>Экспорт и проверка законченного проекта</h2><div class="blocks"><section class="block text"><h3>Выгрузка для передачи</h3><p>CSV создаётся из всех записей, включая архивные; фильтр влияет только на экран. Точка с запятой — разделитель, переносы CRLF облегчают открытие в табличных редакторах, BOM сохраняет русские буквы. Источник каждой записи остаётся в экспорте.</p></section><section class="block code"><h3>Скачивание CSV</h3><pre>document.querySelector(&quot;#export&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  const csv = [columns.join(&quot;;&quot;), ...records.map(item =&gt; columns.map(key =&gt; item[key]).join(&quot;;&quot;))].join(&quot;\r\n&quot;) + &quot;\r\n&quot;;
+  const url = URL.createObjectURL(new Blob([&quot;\uFEFF&quot;, csv], { type: &quot;text/csv;charset=utf-8&quot; }));
   const link = document.createElement(&quot;a&quot;);
-  link.href = url;
-  link.download = &quot;directory-clean.csv&quot;;
-  link.click();
+  link.href = url; link.download = &quot;directory-export.csv&quot;; link.click();
   setTimeout(() =&gt; URL.revokeObjectURL(url), 1000);
-});</pre></section><section class="block text"><h3>Повторная и регрессионная проверка</h3><p>Выгрузите результат, откройте directory-clean.csv в текстовом редакторе и загрузите обратно. Проверьте исправленный контакт, отсутствие повторов, поиск «архив» и сохранение остальных записей. Если CSV показывает слитые столбцы в табличной программе, укажите разделитель «;» при импорте; сам файл проверяйте как текст.</p></section><figure class="block screenshot"><h3>Реальный результат повторной загрузки</h3><img src="assets/screenshots/8da523dda47dbebf.png" alt="Окно справочника после повторной загрузки исправленного файла"><figcaption>Chromium: после правки и экспорта файл загружен повторно, замечаний нет; версия исходников 1.0.</figcaption></figure></div></article><article class="lesson" id="page-6"><p class="eyebrow"></p><h2>Переход к своему варианту и документация</h2><div class="blocks"><section class="block text"><h3>Работа с индивидуальными данными</h3><p>Скачайте CSV непосредственно из карточки своего варианта. Сначала опишите названия, категории и правило уникальности, затем загрузите файл и сравните предупреждения с прогнозом. Для особого требования сопоставьте принятую запись с источником, исправьте неточность через кнопку «Изменить» и перепроверьте экспорт. Общие функции проекта сохраняются.</p></section><section class="block text"><h3>Техническое задание</h3><p>Запишите назначение справочника, пользователя, поля, источники, правила проверки, поиск и сценарии ошибок. Для особого требования варианта укажите входной пример, ожидаемый результат и способ проверки. Это позволяет сопоставить реализацию с согласованной потребностью.</p></section><section class="block text"><h3>Архитектура и контроль версий</h3><p>Опишите роли файлов: index.html задаёт элементы, style.css — представление, app.js — чтение, проверку, показ, правку и экспорт. Создайте отдельный репозиторий проекта; сохраняйте изменения небольшими коммитами после работающей проверки. Не помещайте в учебный репозиторий реальные личные контакты.</p></section><section class="block text"><h3>Руководство пользователя и разработчика</h3><p>В пользовательском руководстве объясните выбор CSV, поиск, исправление и выгрузку. В руководстве разработчика зафиксируйте формат данных, функции, особое правило варианта и воспроизводимые проверки. Укажите версию браузера и дату проверки. При сдаче проекта приложите ссылку на его репозиторий.</p></section></div></article></main><footer><span>ПМ.03 Выполнение работ по одной или нескольким профессиям рабочих, должностям служащих</span><span>Единый учебный комплект</span></footer></div></body></html>
+});
+</pre></section><section class="block text"><h3>Первый показ</h3><p>Заключительный вызов render показывает сохранённые ранее записи сразу после открытия страницы.</p></section><section class="block code"><h3>Показ при открытии</h3><pre>render();</pre></section><section class="block text"><h3>Сквозной запуск</h3><p>Сохраните app.js, обновите index.html. Введите записи 101, 102 и 103 из исходных сведений; для архива 102 используйте обновлённый контакт. Проверьте поиск «архив», фильтр «Документы», сортировку и экспорт. Обновите страницу: записи должны сохраниться. Создайте ошибку К101: форма должна отказать, число записей не меняется. Создайте повтор ID 101: ожидается отдельная ошибка. Переведите 103 в архив и восстановите через фильтр «Архив».</p></section><figure class="block screenshot"><h3>Три проверенные записи в браузере</h3><img src="assets/screenshots/be7e2e1e8a75501b.png" alt="Работающий демонстрационный справочник с тремя записями"><figcaption>Chromium, версия 2.0: три записи со значениями источников и дат; контакт архива взят из уточнения.</figcaption></figure><figure class="block screenshot"><h3>Отказ при неверном кабинете</h3><img src="assets/screenshots/67b3e31cecc15a02.png" alt="Форма справочника показывает ошибку формата кабинета"><figcaption>Chromium, версия 2.0: К101 отвергнут, сохранённые записи не изменились.</figcaption></figure><figure class="block screenshot"><h3>Архивная запись в запущенном приложении</h3><img src="assets/screenshots/ac276ea962dcb3ea.png" alt="Таблица демонстрационного справочника с архивной записью"><figcaption>Chromium, версия 2.0: запись 103 найдена через фильтр «Архив», кнопка восстановления доступна.</figcaption></figure><section class="block text"><h3>Диагностика</h3><p>Если таблица пуста после сохранения, откройте F12 → Console и проверьте первую ошибку JavaScript; затем Application → Local Storage и ключ данных. Если экспорт открылся одним столбцом, импортируйте файл как текст с разделителем «;». Если русские буквы повреждены, проверьте UTF-8 исходников и BOM экспортированного файла.</p></section></div></article><article class="lesson" id="page-7"><p class="eyebrow"></p><h2>Адаптация к варианту и документация</h2><div class="blocks"><p class="block"><a class="button" href="downloads/Directory-demo-complete.zip">Скачать полный демонстрационный справочник для сверки (ZIP)</a><br>Сверяйте устройство после самостоятельной разработки; это решение другой области.</p><section class="block text"><h3>Переход к своей области</h3><p>В карточке варианта даны три вымышленных источника. Не переносите их дословно в приложение: сначала составьте нормализованный перечень, разрешите старые и новые версии, отмечайте неясные записи. Затем замените заголовок, категории, подпись поля detail и его проверку в validate. Остальные функции можно оставить после проверки на своих данных.</p></section><section class="block text"><h3>Пример изменения правила</h3><p>Если вариант задаёт код вида LAB-01, замените подпись «Кабинет» в index.html на «Код полигона», пример поля — на LAB-01, а регулярное выражение /^К-\d{3}$/ в validate — на /^LAB-\d{2}$/. Измените сообщение об ошибке и заголовок столбца. Введите LAB-01 как допустимый случай, LAB-1 как ошибочный, затем повторите поиск и экспорт.</p></section><section class="block text"><h3>Техническое задание</h3><p>Опишите пользователя, источники, формат нормализованной записи, правила конфликта, особое поле своего варианта, состояния, сценарии поиска и ошибки. Для каждого требования запишите пример входа и ожидаемый результат — по нему потом проверяют приложение.</p></section><section class="block text"><h3>Работа с версиями</h3><p>Создайте свой репозиторий проекта. После работающего интерфейса, после сохранения данных и после полного набора функций фиксируйте отдельные коммиты с понятным описанием. Не включайте в репозиторий реальные персональные контакты.</p></section><section class="block text"><h3>Проверка и передача пользователю</h3><p>Проверьте корректное создание, отказ при ошибочном коде и дубле, правку, архивирование/восстановление, поиск, фильтр, сохранение после перезагрузки и CSV. Запишите наблюдаемый результат и версию браузера. В руководстве пользователя объясните ввод и поиск; в руководстве разработчика — поля, localStorage, правила проверки и экспорт. При сдаче проекта приложите ссылку на его репозиторий.</p></section></div></article></main><footer><span>ПМ.03 Выполнение работ по одной или нескольким профессиям рабочих, должностям служащих</span><span>Единый учебный комплект</span></footer></div></body></html>
