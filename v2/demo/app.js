@@ -4,20 +4,57 @@ const columns = ["id", "name", "category", "detail", "contact", "source", "check
 const form = document.querySelector("#entry-form");
 const rowsElement = document.querySelector("#rows");
 const errorElement = document.querySelector("#form-error");
+let storageReadBlocked = false;
 let records = loadRecords();
 let editingId = null;
 
 function loadRecords() {
+  let raw = null;
   try {
-    const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    return Array.isArray(value) ? value : [];
+    raw = localStorage.getItem(STORAGE_KEY);
+    const value = JSON.parse(raw || "[]");
+    const seenIds = new Set();
+    const seenNames = new Set();
+    const valid = Array.isArray(value) && value.every(item => {
+      if (!item || columns.some(key => typeof item[key] !== "string")) return false;
+      const name = item.name.trim().replace(/\s+/g, " ").toLocaleLowerCase("ru");
+      if (!/^\d+$/.test(item.id) || !name || !item.contact.trim() || !item.source.trim() ||
+          !CATEGORIES.includes(item.category) || !/^К-\d{3}$/.test(item.detail) ||
+          !validDate(item.checked) || !["active", "archived"].includes(item.status) ||
+          seenIds.has(item.id) || seenNames.has(name)) return false;
+      seenIds.add(item.id); seenNames.add(name);
+      return true;
+    });
+    if (!valid) {
+      // Preserve the original value before allowing a new catalogue to be saved.
+      localStorage.setItem(STORAGE_KEY + "-recovery-" + Date.now(), raw);
+      errorElement.textContent = "Сохранённые данные повреждены. Их исходная копия оставлена в хранилище с пометкой recovery. Восстановите записи по исходным сведениям.";
+      return [];
+    }
+    return value;
   } catch {
+    if (raw !== null) {
+      try { localStorage.setItem(STORAGE_KEY + "-recovery-" + Date.now(), raw); }
+      catch { storageReadBlocked = true; }
+    } else storageReadBlocked = true;
+    errorElement.textContent = "Не удалось прочитать сохранённые данные. Проверьте доступ к хранилищу браузера; исходные данные не удалены.";
     return [];
   }
 }
 
-function saveRecords() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+function saveRecords(next) {
+  if (storageReadBlocked) {
+    errorElement.textContent = "Хранилище недоступно. Исходные данные сохранены; изменения не записаны. Проверьте настройки браузера и повторно откройте проект.";
+    return false;
+  }
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    records = next;
+    return true;
+  } catch {
+    errorElement.textContent = "Не удалось сохранить изменения в браузере. Проверьте доступ и свободное место. Запись не изменена; введённые поля оставлены в форме.";
+    return false;
+  }
 }
 
 function field(id) {
@@ -65,13 +102,14 @@ form.addEventListener("submit", event => {
   const item = collect();
   const message = validate(item);
   if (message) { errorElement.textContent = message; return; }
-  if (editingId === null) records.push(item);
+  const next = records.map(row => ({ ...row }));
+  if (editingId === null) next.push(item);
   else {
-    const position = records.findIndex(row => row.id === editingId);
-    item.status = records[position].status;
-    records[position] = item;
+    const position = next.findIndex(row => row.id === editingId);
+    item.status = next[position].status;
+    next[position] = item;
   }
-  saveRecords();
+  if (!saveRecords(next)) return;
   clearForm();
   render();
 });
@@ -93,8 +131,11 @@ function beginEdit(id) {
 function changeStatus(id) {
   const item = records.find(row => row.id === id);
   if (!item) return;
-  item.status = item.status === "active" ? "archived" : "active";
-  saveRecords();
+  const next = records.map(row => row.id === id
+    ? { ...row, status: row.status === "active" ? "archived" : "active" }
+    : { ...row });
+  if (!saveRecords(next)) return;
+  errorElement.textContent = "";
   render();
 }
 
@@ -140,7 +181,8 @@ for (const id of ["query", "status-filter", "category-filter", "sort"]) {
 }
 
 document.querySelector("#export").addEventListener("click", () => {
-  const csv = [columns.join(";"), ...records.map(item => columns.map(key => item[key]).join(";"))].join("\r\n") + "\r\n";
+  const csvCell = value => '"' + value.replace(/"/g, '""') + '"';
+  const csv = [columns.join(";"), ...records.map(item => columns.map(key => csvCell(item[key])).join(";"))].join("\r\n") + "\r\n";
   const url = URL.createObjectURL(new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8" }));
   const link = document.createElement("a");
   link.href = url; link.download = "directory-export.csv"; link.click();
